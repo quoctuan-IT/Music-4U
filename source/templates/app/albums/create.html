@@ -5,12 +5,13 @@
 {% block title %}Create Album 🎵{% endblock %}
 
 {% block content %}
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
 
             <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">
+                <div class="card-header text-black" style="background-color: pink;">
                     <h4 class="mb-0">🎵 Create New Album</h4>
                 </div>
 
@@ -23,7 +24,7 @@
                             {{ form.name.label_tag }}
                             {{ form.name }}
                             {% if form.name.errors %}
-                                <div class="text-danger">{{ form.name.errors }}</div>
+                            <div class="text-danger">{{ form.name.errors }}</div>
                             {% endif %}
                         </div>
 
@@ -31,17 +32,17 @@
                         <label class="form-label">Select Songs</label>
                         <div class="mb-3">
                             {% for checkbox in form.songs %}
-                                <div class="form-check">
-                                    {{ checkbox.tag }}
-                                    <label class="form-check-label">{{ checkbox.choice_label }}</label>
-                                </div>
+                            <div class="form-check">
+                                {{ checkbox.tag }}
+                                <label class="form-check-label">{{ checkbox.choice_label }}</label>
+                            </div>
                             {% endfor %}
                             {% if form.songs.errors %}
-                                <div class="text-danger">{{ form.songs.errors }}</div>
+                            <div class="text-danger">{{ form.songs.errors }}</div>
                             {% endif %}
                         </div>
 
-                        <button type="submit" class="btn btn-success w-100">➕ Create Album</button>
+                        <button type="submit" class="btn btn-success w-100">➕ Create</button>
                     </form>
                 </div>
             </div>
@@ -49,5 +50,5 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
+{% endblock %}

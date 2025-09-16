@@ -11,12 +11,9 @@ from .models import Song, Album, Genre, Artist
 
 def index(request):
     songs = Song.objects.all().order_by("-id")[:4]  # Display newest Songs
-    genres = Genre.objects.all()
     artists = Artist.objects.all()
 
-    return render(
-        request, "index.html", {"songs": songs, "genres": genres, "artists": artists}
-    )
+    return render(request, "index.html", {"songs": songs, "artists": artists})
 
 
 # User
@@ -76,7 +73,7 @@ def favorite_songs(request):
     favorite_songs = request.user.favorite_songs.all()
 
     return render(
-        request, "app/songs/favorites.html", {"favorite_songs": favorite_songs}
+        request, "app/users/favorite.html", {"favorite_songs": favorite_songs}
     )
 
 
@@ -131,7 +128,7 @@ def song_to_album(request, song_id):
 def albums(request):
     albums = Album.objects.filter(user=request.user)
 
-    return render(request, "app/albums/albums.html", {"albums": albums})
+    return render(request, "app/albums/index.html", {"albums": albums})
 
 
 @login_required
@@ -184,30 +181,31 @@ def album_remove_song(request, album_id, song_id):
 def search(request):
     query = request.GET.get("query", "")
     genre_id = request.GET.get("genre", "")
-    artist_id = request.GET.get("artist", "")
 
     songs = Song.objects.all()
 
     if query:
         songs = songs.filter(title__icontains=query)
 
+    selected_genre_obj = None
     if genre_id:
         # Support ManyToMany genres
         songs = songs.filter(genres__id=genre_id)
+        try:
+            selected_genre_obj = Genre.objects.get(id=genre_id)
+        except Genre.DoesNotExist:
+            selected_genre_obj = None
 
-    if artist_id:
-        songs = songs.filter(artist__id=artist_id)
-
-    genres = Genre.objects.all()
     artists = Artist.objects.all()
 
     context = {
+        # Data
         "songs": songs,
-        "genres": genres,
         "artists": artists,
+        # User input
         "query": query,
-        "selected_genre": genre_id,
-        "selected_artist": artist_id,
+        "selected_genre": str(genre_id),
+        "selected_genre_name": selected_genre_obj.name if selected_genre_obj else "",
     }
 
     return render(request, "app/songs/search.html", context)

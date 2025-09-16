@@ -1,10 +1,11 @@
-{% extends "base_login.html" %}
+{% extends "base_auth.html" %}
 
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
+
 <main class="form-signin w-100 m-auto">
 
   {% include 'partials/message.html' %}
@@ -56,10 +57,11 @@
       Already have account? <a href="{% url 'login' %}" class="text-info">LOGIN</a>
     </p>
 
-    <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
+    <button class="btn btn-primary w-100 py-2" type="submit">REGISTER</button>
 
     <p class="mt-5 mb-3 text-body-secondary text-center">&copy; IT–SGU</p>
   </form>
 
 </main>
+
 {% endblock %}
