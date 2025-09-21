@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Album - {{ album.name }}{% endblock %}
+
+{% block content %}
+
+<!-- Messages -->
+{% include 'partials/message.html' %}
+
+<div class="container py-2">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-music-note-beamed"></i> Album: {{ album.name }}
+            </h2>
+            <p class="mb-0">Saved by
+                <i class="bi bi-person-circle"></i>
+                <strong>{{ user.username }}</strong>
+            </p>
+        </div>
+
+        <div class="col-lg-2 col-md-3 col-6">
+
+            {% if album.songs.all %}
+            <button class="btn btn-outline-primary" onclick="playAllSongs()">▶️ PLAY All</button>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% if album.songs.all %}
+
+    <!-- Now Playing Section -->
+    {% include 'partials/music_player.html' %}
+
+    <!-- Song List -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header text-black" style="background-color: pink;">
+            <h5 class="mb-0">
+                <i class="bi bi-music-note-list"></i> Songs
+            </h5>
+        </div>
+
+        <div class="list-group list-group-flush" id="songList">
+
+            {% for song in album.songs.all %}
+            {% include 'partials/song_list.html' %}
+            {% endfor %}
+
+        </div>
+    </div>
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-2">
+        <h4 class="mb-3">No Songs Yet</h4>
+        <p class="mb-4">Start adding songs to your Album to build your personal playlist!</p>
+        <a href="{% url 'index' %}" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-box-arrow-right"></i> Discover Music
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+
+
+<script>
+    const songs = [
+        {% for song in album.songs.all %}
+    {
+        title: "{{ song.title|escapejs }}",
+            artist: "{{ song.artist|escapejs }}",
+                url: "{{ song.audio_file.url }}"
+    },
+    {% endfor %}
+    ];
+
+    let currentIndex = 0;
+    const player = document.getElementById("audioPlayer");
+    const nowPlaying = document.getElementById("nowPlaying");
+    const songList = document.querySelectorAll(".song-item");
+
+    function highlightCurrentSong() {
+        songList.forEach(item => item.classList.remove("bg-black", "text-white"));
+        if (songList[currentIndex]) {
+            songList[currentIndex].classList.add("bg-black", "text-white");
+        }
+    }
+
+    function playAllSongs() {
+        if (songs.length === 0) return;
+
+        currentIndex = 0;
+        player.src = songs[currentIndex].url;
+        player.play();
+        updateNowPlaying();
+        highlightCurrentSong();
+    }
+
+    function playNextSong() {
+        currentIndex++;
+        if (currentIndex < songs.length) {
+            player.src = songs[currentIndex].url;
+            player.play();
+            updateNowPlaying();
+            highlightCurrentSong();
+        } else {
+            nowPlaying.innerText = "All songs played.";
+        }
+    }
+
+    function playPreviousSong() {
+        if (songs.length === 0) return;
+        currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+        player.src = songs[currentIndex].url;
+        player.play();
+        updateNowPlaying();
+        highlightCurrentSong();
+    }
+
+    function togglePlay() {
+        if (player.paused) {
+            player.play();
+        } else {
+            player.pause();
+        }
+    }
+
+    function updateNowPlaying() {
+        nowPlaying.innerText = `🎧 ${songs[currentIndex].title} - ${songs[currentIndex].artist}`;
+    }
+
+    // Auto play next song
+    player.onended = playNextSong;
+</script>
+
+
+{% endblock %}

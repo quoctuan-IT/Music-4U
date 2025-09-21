@@ -10,7 +10,7 @@ from .models import Song, Album, Genre, Artist
 
 
 def index(request):
-    songs = Song.objects.all().order_by("-id")[:4]  # Display newest Songs
+    songs = Song.objects.all().order_by("-id")[:5]  # Display newest
     artists = Artist.objects.all()
 
     return render(request, "index.html", {"songs": songs, "artists": artists})
@@ -32,7 +32,7 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "app/users/register.html", {"form": form})
+    return render(request, "app/user/register.html", {"form": form})
 
 
 def login_view(request):
@@ -47,13 +47,12 @@ def login_view(request):
 
         if user is not None:
             auth_login(request, user)
-            messages.success(request, f"Hi! {user.username}")
 
             return redirect("/")
         else:
             messages.error(request, "Login failed!")
 
-    return render(request, "app/users/login.html")
+    return render(request, "app/user/login.html")
 
 
 def logout_view(request):
@@ -65,7 +64,7 @@ def logout_view(request):
 
 @login_required()
 def profile(request):
-    return render(request, "app/users/profile.html")
+    return render(request, "app/user/index.html")
 
 
 @login_required()
@@ -73,8 +72,23 @@ def favorite_songs(request):
     favorite_songs = request.user.favorite_songs.all()
 
     return render(
-        request, "app/users/favorite.html", {"favorite_songs": favorite_songs}
+        request, "app/user/favorite.html", {"favorite_songs": favorite_songs}
     )
+
+
+# Songs
+def songs(request):
+    songs = Song.objects.all().order_by("-id")[:5]  # Display newest Songs
+    artists = Artist.objects.all()
+
+    return render(request, "app/song/index.html", {"songs": songs, "artists": artists})
+
+
+@login_required
+def album_detail(request, album_id):
+    album = Album.objects.get(id=album_id, user=request.user)
+
+    return render(request, "app/album/detail.html", {"album": album})
 
 
 # Song
@@ -83,7 +97,7 @@ def song_detail(request, song_id):
     song = get_object_or_404(Song, id=song_id)
     albums = Album.objects.filter(user=request.user)
 
-    return render(request, "app/songs/detail.html", {"song": song, "albums": albums})
+    return render(request, "app/song/detail.html", {"song": song, "albums": albums})
 
 
 @login_required
@@ -128,14 +142,14 @@ def song_to_album(request, song_id):
 def albums(request):
     albums = Album.objects.filter(user=request.user)
 
-    return render(request, "app/albums/index.html", {"albums": albums})
+    return render(request, "app/album/index.html", {"albums": albums})
 
 
 @login_required
 def album_detail(request, album_id):
     album = Album.objects.get(id=album_id, user=request.user)
 
-    return render(request, "app/albums/detail.html", {"album": album})
+    return render(request, "app/album/detail.html", {"album": album})
 
 
 @login_required
@@ -154,7 +168,7 @@ def album_create(request):
     else:
         form = AlbumForm()
 
-    return render(request, "app/albums/create.html", {"form": form})
+    return render(request, "app/album/create.html", {"form": form})
 
 
 @login_required
@@ -175,6 +189,20 @@ def album_remove_song(request, album_id, song_id):
     messages.success(request, f"Removed '{song.title}' from album.")
 
     return redirect("album_detail", album_id=album.id)
+
+
+# Artist
+def artists(request):
+    artists = Artist.objects.all().order_by("-id")[:5]
+
+    return render(request, "app/artist/index.html", {"artists": artists})
+
+
+def artist_detail(request, artist_id):
+    artist = get_object_or_404(Artist, id=artist_id)
+    songs = Song.objects.filter(artist=artist).order_by("-id")
+
+    return render(request, "app/artist/detail.html", {"artist": artist, "songs": songs})
 
 
 # Search
@@ -208,4 +236,4 @@ def search(request):
         "selected_genre_name": selected_genre_obj.name if selected_genre_obj else "",
     }
 
-    return render(request, "app/songs/search.html", context)
+    return render(request, "app/song/search.html", context)
