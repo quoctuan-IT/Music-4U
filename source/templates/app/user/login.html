@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<main class="form-signin w-100 m-auto">
+<main class="m-auto mt-4">
 
   {% include 'partials/message.html' %}
 
@@ -17,12 +17,12 @@
 
     <h1 class="h3 mb-3 fw-normal">LOGIN</h1>
 
-    <div class="form-floating">
+    <div class="form-floating mb-3">
       <input type="text" class="form-control" name="username" id="username" required autofocus placeholder="">
       <label for="username" class="form-label">Username</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating mb-3">
       <input type="password" class="form-control" name="password" id="password" required placeholder="">
       <label for="password" class="form-label">Password</label>
     </div>
