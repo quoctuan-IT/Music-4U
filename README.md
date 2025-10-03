@@ -192,3 +192,22 @@ curl -X POST http://127.0.0.1:8000/api/albums/ \
   -H "Content-Type: application/json" \
   -d '{"name":"My Favorites"}'
 ```
+
+<div class="container">
+    <hr class="my-4 border-secondary">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <p class="mb-2 text-muted">
+                <i class="fas fa-code me-2"></i>
+                Developed by <strong style="color: pink;">Phạm Quốc Tuấn ❤️</strong>
+            </p>
+            <p class="mb-2 text-muted">
+                <i class="fas fa-code me-2"></i>
+                IT - Saigon University
+            </p>
+            <p class="mb-4 text-muted">
+                &copy; 2025 Music Web. All rights reserved.
+            </p>
+        </div>
+    </div>
+</div>
