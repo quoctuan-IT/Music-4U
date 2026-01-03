@@ -9,14 +9,8 @@ media/
 
 # Virtual env
 .env
-.venv
 venv/
-ENV/
 
 # IDE
 .vscode/
 .idea/
-
-# Project specific
-staticfiles/
-media/
