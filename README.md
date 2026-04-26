@@ -1,183 +1,162 @@
-## M4U - Music Streaming Web 🎵
-## Deployment 🚀: https://phamquoctuan041203.pythonanywhere.com/
+# 🎵 **M4U - Music Streaming Platform**
 
-A full‑stack music streaming web app that lets users browse, play, and manage songs, favorite tracks, and personal albums. It supports authentication, artist and genre browsing, search with genre filters, and a responsive audio player.
+**Music Streaming Platform** lets users browse, play, and manage songs, favorite tracks, and personal albums. It supports authentication, artist and songs browsing, responsive audio player, search and filters.
 
-**This project provides both:**
-- **Django MVC**: Traditional web app with HTML templates
-- **Django REST API**: JSON APIs for frontend integration
+Furthermore, it features a Admin Dashboard, providing administrators with control songs, albums, artist, genres, and user management through a secure, role-based access control (RBAC) system.
 
-
-## 🚀 Features
-
-- **Admin**
-  - Manage Songs, Users, Genres, Artists, Albums (Django Admin)
-
-- **User**
-  - Register / Login / Logout
-  - Browse latest songs and view song details
-  - Stream audio files served from the backend, auto‑play next track
-  - Add/Remove songs from Favorites
-  - Create personal Albums, add/remove songs in albums
-  - Search songs by keyword and filter by Genre
-  - Browse Artists and view Artist details with their songs
-
+## 🌐 Deployment
+- 🚀 **Web App**: [phamquoctuan041203.pythonanywhere.com](https://phamquoctuan041203.pythonanywhere.com/)
+- 📖 **Django REST API**: [phamquoctuan041203.pythonanywhere.com/api](https://phamquoctuan041203.pythonanywhere.com/api/)
 
 ## 🛠️ Tech Stack
+- ⚙️ **Backend**: Python 3 (Django REST Framework 5)
+- 🔗 **ORM**: Django ORM
+- 🗄️ **Database**: MySQL Workbench 8
+- 🔐 **Authentication**: Django Session + Simple JWT
+- 📄 **API Documentation**: Django REST Framework API
+- 🎨 **Frontend**: HTML5, CSS3, Bootstrap5, JavaScript
+- 🌈 **Icons**: Bootstrap Icons
 
-- **Front‑end**: HTML5, CSS3, Bootstrap 5, JavaScript
-- **Back‑end**: Python 3, Django 5, Django REST Framework
-- **Database**: MySQL
-- **Authentication**: Django Session (MVC) + JWT (API)
+## ✨ Features
 
+### 👤 Customer
+- **Smart Streaming:** High-quality audio playback with auto-play next track logic.
+- **Library Management:** Personalize experience with Favorites and Custom Albums.
+- **Discovery:** Browse latest releases, artist profiles, and detailed track insights.
+- **Advanced Search:** Quick navigation with smart filtering by songs and artists.
 
-## 📦 Setup & Run
-```bash
+### 👨‍💼 Admin Panel (Django Admin)
+- **Authorization:** Secure RBAC (Role-Based Access Control).
+- **Catalog:** Full CRUD Songs, Users, Genres, Artists, Albums.
+- **Users:** Account oversight and security credential resets.
+- **Token:** Management Outstanding Token and Blacklisted Token.
 
-# 1) Clone
-git clone https://github.com/quoctuan-IT/Music4U.git
-cd Music4U
+### 🖥️ Admin Interface
+<details>
+<summary><b>🔍 Click to see Admin Screenshots</b></summary>
 
-# 2) Create virtualenv (Windows)
-python -m venv venv
+| Dashboard | Token Management |
+|:---:|:---:|
+| <img src="screenshots/Dashboard.png" width="100%" alt="Dashboard"> | <img src="screenshots/Token.png" width="100%" alt="Token"> |
+| Artists Management | Artist Update |
+| <img src="screenshots/Artists.png" width="100%" alt="Artists List"> | <img src="screenshots/ArtistUpdate.png" width="100%" alt="Artist Update"> |
+| Songs Management | Song Update |
+| <img src="screenshots/Songs.png" width="100%" alt="Songs List"> | <img src="screenshots/SongUpdate.png" width="100%" alt="Song Update"> |
+| Albums Management | Album Update |
+| <img src="screenshots/Albums.png" width="100%" alt="Albums List"> | <img src="screenshots/AlbumUpdate.png" width="100%" alt="Album Update"> |
+| Users Management | User Update |
+| <img src="screenshots/Users.png" width="100%" alt="Users List"> | <img src="screenshots/UserUpdate.png" width="100%" alt="User Update"> |
 
-# 3) Activate
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass  # optional
-venv\Scripts\activate
+</details>
 
-# 4) Install deps
-pip install -r requirements.txt
+## API Endpoints
 
-# 5) Configure DB in source/project/settings.py (MySQL)
-# Ensure INSTALLED_APPS includes: 'rest_framework', 'rest_framework_simplejwt'
+### Auth API (`/api/auth`)
+- `POST /register` — Register user
+- `POST /login` — Login (get JWT tokens)
+- `POST /refresh` — Refresh access token
+- `POST /logout` — Logout (blacklist refresh token)
+- `GET /profile` — Get user profile
 
-# 6) Migrate
-cd source
-python manage.py makemigrations
-python manage.py migrate
+### Search API (`/api/search`)
+- `GET /api/search/?query=<strings>&genre=<id>` — Search songs
 
-# 7) Create superuser
-python manage.py createsuperuser
+### Songs API (`/api/songs`)
+- `GET /` — List songs
+- `GET /{id}` — Song detail
+- `GET /api/songs/favorites/` — List favorite songs ``JWT token``
+- `POST /api/songs/{id}/favorite/` — Toggle favorite ``JWT token``
 
-# 8) Run server
-python manage.py runserver
+### Artists API (`/api/artists`)
+- `GET /` — List artists
+- `GET /{id}` — Artist detail
 
-```
+### Genres API (`/api/genres`)
+- `GET /` — List genres 
+- `GET /{id}` — Genre detail 
 
-
-Static files are served in development when `DEBUG=True` with:
-- `STATIC_URL = "/static/"`
-- `STATICFILES_DIRS = [BASE_DIR / "static"]`
-
-Media (cover images, audio files) are stored under `source/media/`.
-
-Access:
-- **MVC Web App**: `http://127.0.0.1:8000/`
-- **REST API**: `http://127.0.0.1:8000/api/`
-- **Admin Panel**: `http://127.0.0.1:8000/admin/`
-
-
-## 🔗 Routes
-
-### **MVC Web App Routes**
-- Home: `/`
-- Register: `/register/`
-- Login: `/login/`
-- Logout: `/user/logout/`
-- Profile: `/user/`
-- Favorites: `/user/favorite/`
-
-- Songs: `/songs/`
-- Song detail: `/song/<song_id>/detail/`
-- Toggle favorite (AJAX/POST): `/song/<song_id>/favorite/`
-- Add song to album (POST): `/song/<song_id>/song-albums/`
-
-- User albums: `/user/albums/`
-- Album detail: `/user/album/<album_id>/detail/`
-- Create album: `/user/album/create/`
-- Delete album: `/user/album/<album_id>/delete/`
-- Remove song from album: `/user/album/<album_id>/song/<song_id>/remove`
-
-- Artists: `/artists/`
-- Artist detail: `/artist/<artist_id>/detail/`
-
-- Search: `/search/?query=...&genre=<genre_id>`
-
-### **REST API Routes**
-
-#### **Authentication**
-- `POST /api/auth/register/` — Register user
-- `POST /api/auth/login/` — Login (get JWT tokens)
-- `POST /api/auth/refresh/` — Refresh access token
-- `POST /api/auth/logout/` — Logout (blacklist refresh token)
-- `GET /api/auth/profile/` — Get user profile
-
-#### **Public Endpoints**
-- `GET /api/songs/` — List songs
-- `GET /api/songs/{id}/` — Song detail
-- `GET /api/artists/` — List artists
-- `GET /api/artists/{id}/` — Artist detail
-- `GET /api/genres/` — List genres
-- `GET /api/genres/{id}/` — Genre detail
-- `GET /api/search/?query=...&genre=<id>` — Search songs
-
-#### **Authenticated Endpoints**
-- `GET /api/songs/favorites/` — List favorite songs
-- `POST /api/songs/{id}/favorite/` — Toggle favorite
+### Albums API (`/api/albums`) - ``JWT token``
 - `GET /api/albums/` — List my albums
 - `POST /api/albums/` — Create album
 - `GET|PUT|DELETE /api/albums/{id}/` — Album CRUD
 - `POST /api/albums/{album_id}/songs/{song_id}/add/` — Add song to album
 - `DELETE /api/albums/{album_id}/songs/{song_id}/remove/` — Remove song from album
 
-#### **Admin Endpoints (Staff Only)**
-- `GET|POST /api/admin/songs/` — Song CRUD
-- `GET|POST /api/admin/artists/` — Artist CRUD
-- `GET|POST /api/admin/genres/` — Genre CRUD
+### Admin API (`/api/admin`) - ``JWT token``
+- `GET|POST /songs` — Song CRUD
+- `GET|POST /artists` — Artist CRUD
+- `GET|POST /genres` — Genre CRUD
 
+## 🏗️ Solution Structure
+```text
+Music-4U/
+├── source/                      # Root directory for Django source code
+│   ├── app/                     # 🎵 Core application logic (Models, Views, Serializers)
+│   ├── project/                 # ⚙️ Project settings & configurations (settings.py, urls.py)
+│   ├── media/                   # 📂 User-uploaded audio files & images (Git ignored)
+│   ├── static/                  # Frontend assets (CSS, JavaScript, Images)
+│   ├── templates/               # HTML interface components
+│   ├── .env                     # 🔐 Private environment variables
+│   ├── manage.py                # Administrative command-line utility
+│   └── requirements.txt         # Project dependencies
+└── README.md                    # Project documentation
+```
 
-## 📚 Data Model
+## 🚀 Setup & Run Locally
 
-- `Artist(name, bio, image)`
-- `Genre(name, description)`
-- `Song(title, cover_image, audio_file, lyrics, artist(FK), genres(M2M), uploaded_by, created_at)`
-- `Album(name, user, songs(M2M), created_at)`
-- Each `User` has `favorite_songs` (ManyToMany to `Song`).
-
-
-## 🎧 Player & Favorites
-
-- **MVC**: Favorite button uses AJAX POST to `/song/<id>/favorite/`, returns JSON `{ is_favorite: true|false }` and updates the UI (Like/Liked).
-- **API**: Use `POST /api/songs/{id}/favorite/` with JWT authentication.
-- Audio player supports Play/Pause, Next, Previous, and artist song lists; auto‑advances to the next track on end.
-
-
-## 🧪 Quick Test Flow
-
-### **MVC Web App**
-1) Create some `Artist`, `Genre`, `Song` via Admin.
-2) Log in as a regular user, add songs to Favorites on the song card or detail page.
-3) Create an `Album`, add songs; remove a song from album to verify the flow.
-4) Use Search with keyword and Genre filter.
-
-### **REST API**
+### 1) 📥 Clone
 ```bash
-# Register & Login
+git clone https://github.com/quoctuan-IT/Music-4U.git
+cd Music-4U
+cd source
+```
+
+### 2) ⚙️ Configure Virtualenv and Install
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 3) 🔄 Migrate Database
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+### 4) 🐞 Debug and Run
+```bash
+python manage.py runserver
+```
+
+### 5) 🌍 Access
+- MVC: `https://localhost:<port>/`
+- ADMIN: `https://localhost:<port>/admin`
+- API: `https://localhost:<port>/api`
+
+## 🧪 Quick API Test Flow `(Django REST API)`
+```bash
+# Register
 curl -X POST http://127.0.0.1:8000/api/auth/register/ \
   -H "Content-Type: application/json" \
   -d '{"username":"test","password":"pass123","email":"test@example.com"}'
 
+# Login
 curl -X POST http://127.0.0.1:8000/api/auth/login/ \
   -H "Content-Type: application/json" \
   -d '{"username":"test","password":"pass123"}'
 
-# Response: {"access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...", "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."}
+# Response
+Response:{"access": "<ACCESS_TOKEN>","refresh": "<ACCESS_TOKEN>"}
+# Use <ACCESS_TOKEN> for authenticated requests
+```
 
-# Use JWT access token for authenticated requests
+```bash
 curl http://127.0.0.1:8000/api/songs/ \
   -H "Authorization: Bearer <ACCESS_TOKEN>"
 
-# Refresh token when access token expires
+# "Refresh" token when access token "Expires"
 curl -X POST http://127.0.0.1:8000/api/auth/refresh/ \
   -H "Content-Type: application/json" \
   -d '{"refresh": "<REFRESH_TOKEN>"}'
@@ -193,21 +172,35 @@ curl -X POST http://127.0.0.1:8000/api/albums/ \
   -d '{"name":"My Favorites"}'
 ```
 
-<div class="container">
-    <hr class="my-4 border-secondary">
-    <div class="row justify-content-center">
-        <div class="col-12 text-center">
-            <p class="mb-2 text-muted">
-                <i class="fas fa-code me-2"></i>
-                Developed by <strong style="color: pink;">Phạm Quốc Tuấn ❤️</strong>
-            </p>
-            <p class="mb-2 text-muted">
-                <i class="fas fa-code me-2"></i>
-                IT - Saigon University
-            </p>
-            <p class="mb-4 text-muted">
-                &copy; 2025 Music Web. All rights reserved.
-            </p>
-        </div>
-    </div>
+## 📝 Notes
+Media (images, audio files) are saved at: `source/media/`.
+
+<div align="center">
+    <br />
+    <svg width="100%" height="10" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#092e20;stop-opacity:1" /> <stop offset="100%" style="stop-color:#3776ab;stop-opacity:1" /> </linearGradient>
+        </defs>
+        <rect width="100%" height="4" fill="url(#grad1)" rx="2" />
+    </svg>
+    <br />
+    <p align="center">
+        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" />
+        <img src="https://img.shields.io/badge/Django_Rest_Framework-092E20?style=flat-square&logo=django&logoColor=white" />
+        <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white" />
+        <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white" />
+    </p>
+    <p>
+        💻 Developed by <strong style="color: #3776ab;">Phạm Quốc Tuấn</strong> ❤️<br/>
+        🎓 <strong>IT - Saigon University (SGU)</strong>
+    </p>
+    <p>
+        <a href="https://github.com/quoctuan-IT">
+            <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+    </p>
+    <p style="color: #888; font-size: 0.85rem;">
+        &copy; 2026 Music Streaming Project. All rights reserved.
+    </p>
 </div>
