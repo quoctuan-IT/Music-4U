@@ -18,7 +18,7 @@
                 <strong>{{ user.username }}</strong>
             </p>
         </div>
-        <a href="{% url 'album_create' %}" class="btn btn-outline-success">
+        <a class="btn btn-outline-success" href="{% url 'album_create' %}">
             <i class="bi bi-folder-plus"></i> Create
         </a>
     </div>
@@ -64,12 +64,12 @@
                 <!-- Album Actions -->
                 <div class="card-footer bg-transparent border-0">
                     <div class="d-grid gap-2">
-                        <a href="{% url 'album_detail' album.id %}" class="btn btn-outline-primary btn-sm">
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'album_detail' album.id %}">
                             <i class="bi bi-music-note-list"></i> View
                         </a>
                         <div class="btn-group" role="group">
-                            <a href="{% url 'album_delete' album.id %}" class="btn btn-outline-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete &quot;{{ album.name }}&quot;?')">
+                            <a class="btn btn-outline-danger btn-sm" href="{% url 'album_delete' album.id %}"
+                               onclick="return confirm('Are you sure you want to delete &quot;{{ album.name }}&quot;?')">
                                 <i class="bi bi-x-circle"></i> Delete
                             </a>
                         </div>
@@ -85,7 +85,7 @@
     <div class="text-center py-2">
         <h4 class="mb-3">No Albums Yet</h4>
         <p class="mb-4">You haven't created any albums yet. Start building your music collection!</p>
-        <a href="{% url 'index' %}" class="btn btn-outline-primary btn-lg">
+        <a class="btn btn-outline-primary btn-lg" href="{% url 'index' %}">
             <i class="bi bi-box-arrow-right"></i> Discover Music
         </a>
     </div>

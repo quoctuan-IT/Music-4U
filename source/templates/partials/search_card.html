@@ -1,20 +1,20 @@
 <!-- Search Section -->
 <div class="container pt-5">
     <div class="card-body">
-        <form method="get" action="{% url 'search' %}" class="row g-3 align-items-end justify-content-center">
+        <form action="{% url 'search' %}" class="row g-3 align-items-end justify-content-center" method="get">
             <!-- Search Input -->
             <div class="col-lg-4 col-md-5 col-12">
-                <label for="searchInput" class="form-label fw-semibold">
+                <label class="form-label fw-semibold" for="searchInput">
                     <i class="bi bi-search-heart"></i> Search
                 </label>
-                
-                <input type="text" class="form-control" id="searchInput" name="query"
-                    placeholder="Enter Song title or Artist" value="{{ query }}">
+
+                <input class="form-control" id="searchInput" name="query" placeholder="Enter Song title or Artist"
+                       type="text" value="{{ query }}">
             </div>
 
             <!-- Genre Filter -->
             <div class="col-lg-3 col-md-4 col-12">
-                <label for="genreSelect" class="form-label fw-semibold">
+                <label class="form-label fw-semibold" for="genreSelect">
                     <i class="bi bi-funnel"></i> Filter by Genre
                 </label>
 
@@ -22,17 +22,17 @@
                     <option value="">All Genres</option>
 
                     {% for genre in genres %}
-                    <option value="{{ genre.id }}" {% if genre.id|stringformat:"s" == selected_genre %}selected{% endif %}>
+                    <option value="{{ genre.id }}"
+                            {% if genre.id|stringformat:"s" == selected_genre %}selected{% endif %}>
                         {{ genre.name }}
                     </option>
                     {% endfor %}
-
                 </select>
             </div>
 
             <!-- Search Button -->
             <div class="col-lg-2 col-md-3 col-6 d-grid">
-                <button type="submit" class="btn text-black" style="background-color: pink;">
+                <button class="btn text-black" style="background-color: pink;" type="submit">
                     Search <i class="bi bi-search-heart"></i>
                 </button>
             </div>
@@ -41,7 +41,7 @@
         <!-- Clear Button (when has filters) -->
         {% if query or selected_genre %}
         <div class="text-center mt-3">
-            <a href="{% url 'index' %}" class="btn btn-outline-danger">
+            <a class="btn btn-outline-danger" href="{% url 'index' %}">
                 Clear Filters
             </a>
         </div>

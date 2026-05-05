@@ -16,11 +16,11 @@
             <div class="card shadow-lg border-0 bg-dark text-white">
 
                 {% if artist.image %}
-                <img src="{{ artist.image.url }}" class="card-img-top img-fluid w-100 artist-img-detail"
-                    alt="{{ artist.name }}">
+                <img alt="{{ artist.name }}" class="card-img-top img-fluid w-100 artist-img-detail"
+                     src="{{ artist.image.url }}">
                 {% else %}
-                <img src="{% static 'images/logo-IT.png' %}" class="card-img-top img-fluid w-100 artist-img-detail"
-                    alt="No Image">
+                <img alt="No Image" class="card-img-top img-fluid w-100 artist-img-detail"
+                     src="{% static 'images/logo-IT.png' %}">
                 {% endif %}
 
                 <div class="card-body">
@@ -51,7 +51,7 @@
     <!-- Song List -->
     <div class="card shadow-sm border-0">
         <div class="card-header text-black"
-            style="background-color: pink;">
+             style="background-color: pink;">
             <h5 class="mb-0">
                 <i class="bi bi-music-note-list"></i> {{ artist.name }}
             </h5>
@@ -69,7 +69,7 @@
     <div class="text-center py-2">
         <h4 class="mb-3">No Songs found</h4>
         <p class="mb-4">This artist hasn't uploaded any songs yet!</p>
-        <a href="{% url 'index' %}" class="btn btn-outline-primary btn-lg">
+        <a class="btn btn-outline-primary btn-lg" href="{% url 'index' %}">
             <i class="fas fa-search me-2"></i>Discover Music
         </a>
     </div>

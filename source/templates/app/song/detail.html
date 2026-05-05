@@ -14,29 +14,29 @@
             <div class="card shadow-lg border-0 mb-4 bg-dark text-white">
 
                 {% if song.cover_image %}
-                <img src="{{ song.cover_image.url }}" class="card-img-top" alt="{{ song.title }}" height="300">
+                <img alt="{{ song.title }}" class="card-img-top" height="300" src="{{ song.cover_image.url }}">
                 {% else %}
-                <img src="{% static 'images/Error.png' %}" class="card-img-top" alt="No Cover" height="300">
+                <img alt="No Cover" class="card-img-top" height="300" src="{% static 'images/Error.png' %}">
                 {% endif %}
 
                 <div class="card-body">
                     <h2 class="card-title">{{ song.title }}</h2>
                     <p class="card-text mb-2">
                         <strong>Artist:</strong> {{ song.artist.name }} <br>
-                        
-                        <strong>Genre{% if song.genres.count > 1 %}s{% endif %}:</strong> 
+
+                        <strong>Genre{% if song.genres.count > 1 %}s{% endif %}:</strong>
 
                         {% for genre in song.genres.all %}
-                            <span class="badge bg-primary me-1">{{ genre.name }}</span>
+                        <span class="badge bg-primary me-1">{{ genre.name }}</span>
                         {% empty %}
-                            <span class="text-muted">No genre</span>
+                        <span class="text-muted">No genre</span>
                         {% endfor %}
 
                     </p>
 
                     <!-- Audio player -->
                     <div class="my-4">
-                        <audio controls autoplay class="w-100">
+                        <audio autoplay class="w-100" controls>
                             <source src="{{ song.audio_file.url }}" type="audio/mpeg">
                         </audio>
                     </div>
@@ -48,9 +48,9 @@
                         <button class="btn btn-outline-light btn-favorite" data-song-id="{{ song.id }}">🤍 Like</button>
                         {% endif %}
 
-                    <div class="text-muted small text-end my-2">
-                        Uploaded by: {{ song.uploaded_by.username }} on {{ song.created_at|date:"d/m/Y" }}
-                    </div>
+                        <div class="text-muted small text-end my-2">
+                            Uploaded by: {{ song.uploaded_by.username }} on {{ song.created_at|date:"d/m/Y" }}
+                        </div>
                     </div>
 
                 </div>
@@ -65,7 +65,7 @@
                         <i class="bi bi-folder-plus"></i> Add to Album
                     </h5>
 
-                    <form method="POST" action="{% url 'song_to_album' song.id %}">
+                    <form action="{% url 'song_to_album' song.id %}" method="POST">
                         {% csrf_token %}
                         <div class="row g-3 align-items-center">
                             <div class="col-md-8">
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="col-md-4 text-end">
-                                <button type="submit" class="btn btn-outline-success">
+                                <button class="btn btn-outline-success" type="submit">
                                     <i class="bi bi-folder-plus"></i> Add
                                 </button>
                             </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
             {% endif %}
-            
+
             {% include 'partials/message.html' %}
         </div>
     </div>

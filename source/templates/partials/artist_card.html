@@ -8,11 +8,11 @@
             <a href="{% url 'artist_detail' artist.id %}">
 
                 {% if artist.image %}
-                <img src="{{ artist.image.url }}" class="card-img-top" alt="{{ artist.name }}"
-                    style="height: 200px; object-fit: cover;">
+                <img alt="{{ artist.name }}" class="card-img-top" src="{{ artist.image.url }}"
+                     style="height: 200px; object-fit: cover;">
                 {% else %}
-                <img src="{% static 'images/logo-IT.png' %}" class="card-img-top" alt="Default artist"
-                    style="height: 200px; object-fit: cover;">
+                <img alt="Default artist" class="card-img-top" src="{% static 'images/logo-IT.png' %}"
+                     style="height: 200px; object-fit: cover;">
                 {% endif %}
 
             </a>

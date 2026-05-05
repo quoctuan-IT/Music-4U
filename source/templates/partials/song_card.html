@@ -8,11 +8,11 @@
             <a href="{% url 'song_detail' song.id %}">
 
                 {% if song.cover_image %}
-                <img src="{{ song.cover_image.url }}" class="card-img-top" alt="{{ song.title }}"
-                    style="height: 200px; object-fit: cover;">
+                <img alt="{{ song.title }}" class="card-img-top" src="{{ song.cover_image.url }}"
+                     style="height: 200px; object-fit: cover;">
                 {% else %}
-                <img src="{% static 'images/logo-IT.png' %}" class="card-img-top" alt="Default cover"
-                    style="height: 200px; object-fit: cover;">
+                <img alt="Default cover" class="card-img-top" src="{% static 'images/logo-IT.png' %}"
+                     style="height: 200px; object-fit: cover;">
                 {% endif %}
 
             </a>
@@ -30,8 +30,8 @@
             <h6 class="card-title text-truncate mb-2" title="{{ song.title }}">
                 {{ song.title }}
             </h6>
-            <a class="card-text text-muted small text-truncate mb-2" title="{{ song.artist }}"
-                href="{% url 'artist_detail' song.artist.id %}">
+            <a class="card-text text-muted small text-truncate mb-2" href="{% url 'artist_detail' song.artist.id %}"
+               title="{{ song.artist }}">
                 <i class="bi bi-person me-1"></i>{{ song.artist }}
             </a>
         </div>
@@ -39,17 +39,19 @@
         <!-- Card Footer -->
         <div class="card-footer bg-transparent border-0 pt-0">
             <div class="d-flex gap-1">
-                <a class="btn btn-outline-primary btn-sm flex-fill" title="Play" href="{% url 'song_detail' song.id %}">
+                <a class="btn btn-outline-primary btn-sm flex-fill" href="{% url 'song_detail' song.id %}" title="Play">
                     <i class="bi bi-play-circle"></i>
                 </a>
 
                 {% if user.is_authenticated %}
                 {% if song in user.favorite_songs.all %}
                 <button class="btn btn-outline-danger btn-sm flex-fill btn-favorite" data-song-id="{{ song.id }}"
-                    title="Remove from Favorites">❤️ Liked</button>
+                        title="Remove from Favorites">❤️ Liked
+                </button>
                 {% else %}
                 <button class="btn btn-outline-danger btn-sm flex-fill btn-favorite" data-song-id="{{ song.id }}"
-                    title="Add to Favorites">🤍 Like</button>
+                        title="Add to Favorites">🤍 Like
+                </button>
                 {% endif %}
                 {% endif %}
 

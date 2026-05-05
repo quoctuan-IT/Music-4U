@@ -50,14 +50,14 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <a href="{% url 'favorite' %}" class="btn btn-outline-danger w-100 py-3">
+                            <a class="btn btn-outline-danger w-100 py-3" href="{% url 'favorite' %}">
                                 <i class="fas fa-heart fa-2x mb-2 d-block"></i>
                                 <div class="fw-semibold">Favorite Songs ❤️</div>
                             </a>
                         </div>
 
                         <div class="col-md-4">
-                            <a href="{% url 'albums' %}" class="btn btn-outline-primary w-100 py-3">
+                            <a class="btn btn-outline-primary w-100 py-3" href="{% url 'albums' %}">
                                 <i class="fas fa-compact-disc fa-2x mb-2 d-block"></i>
                                 <div class="fw-semibold">Albums <i class="bi bi-music-note-list"></i></div>
                             </a>
@@ -65,7 +65,7 @@
 
                         {% if user.is_staff %}
                         <div class="col-md-4">
-                            <a href="/admin" class="btn btn-outline-warning w-100 py-3">
+                            <a class="btn btn-outline-warning w-100 py-3" href="/admin">
                                 <i class="fas fa-cog fa-2x mb-2 d-block"></i>
                                 <div class="fw-semibold">Admin <i class="bi bi-person-circle"></i></div>
                             </a>
