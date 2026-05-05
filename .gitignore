@@ -4,7 +4,7 @@ __pycache__/
 
 # Django
 staticfiles/
-media/*
+source/media/*
 db.sqlite3
 
 # Virtual env
