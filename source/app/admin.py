@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 from .models import Song, Album, Genre, Artist
 
-
 # Register your models here.
 admin.site.register(Song)
 admin.site.register(Album)
